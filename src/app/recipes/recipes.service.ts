@@ -6,7 +6,7 @@ import { Recipe } from './recipe.model';
 })
 export class RecipesService {
 
-  private recipes: Recipe[] = [{
+   recipes: Recipe[] = [{
     id:'r1',
     title:'Sambar',
     imageUrl:'assets/sambar.jpg',
@@ -46,6 +46,7 @@ ingredients:['chicken','Masala','Chilli powder','Pepper']
 
 constructor() { }
 
+
 getAllRecipes()
 {
   return[...this.recipes];
@@ -57,5 +58,13 @@ getRecipe(recipeId:string)
     return recipe.id ===recipeId;
   })
 };
+}
+
+deleteRecipe(recipeId:string)
+{
+  console.log(this.recipes);
+  this.recipes = this.recipes.filter(recipe =>{
+    return recipe.id !== recipeId;
+  });
 }
 }
