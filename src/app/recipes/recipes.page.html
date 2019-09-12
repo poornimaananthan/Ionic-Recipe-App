@@ -1,0 +1,18 @@
+<ion-header >
+    <ion-toolbar color="tertiary">
+      <ion-title>
+        <span>Recipes</span> 
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list *ngFor="let data of recipes" (click)="navigateToDetails(data.id)" >
+    <ion-item>
+      <ion-avatar slot="start">
+        <ion-img [src]="data.imageUrl"></ion-img>
+      </ion-avatar>
+      <ion-label>{{data.title}}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
