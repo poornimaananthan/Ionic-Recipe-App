@@ -13,13 +13,16 @@ import { environment } from '../environments/environment';
 import { Page1Component } from './page1/page1.component';
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ApiService } from './app.service';
+import { ReactiveFormsModule ,FormsModule} from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [AppComponent,Page1Component],
   entryComponents: [],
-  imports: [BrowserModule,FormsModule,CommonModule, IonicModule.forRoot(), AppRoutingModule, ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })],
+  imports: [BrowserModule,ReactiveFormsModule,HttpClientModule,FormsModule,CommonModule, IonicModule.forRoot(), AppRoutingModule, ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })],
   providers: [
     StatusBar,
+    ApiService,
     EmailComposer,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

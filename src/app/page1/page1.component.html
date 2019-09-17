@@ -1,9 +1,15 @@
-<ion-header >
-  <ion-toolbar color="tertiary">
-    <ion-title>
-      <span>Budget Planner</span> 
-    </ion-title>
-  </ion-toolbar>
+<ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>
+        Sign Up
+      </ion-title>
+      <ion-buttons slot="start">
+        <ion-button (click)="prev()"><ion-icon slot="start" name="arrow-back"></ion-icon> Prev</ion-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button (click)="next()">Next <ion-icon slot="end" name="arrow-forward"></ion-icon></ion-button>
+      </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 <ion-content >
 <ion-grid>
@@ -16,18 +22,22 @@
               </ion-card-title>
             </ion-card-header>
             <ion-card-content>
+              <form class="form-control" [formGroup]="myGroup">
                 <ion-item>
                     <ion-label position="floating">Expense Reason</ion-label>
-                    <ion-input type="text" [(ngModel)]="enteredReason"></ion-input>
+                    <ion-input type="text" formControlName="enteredReason" name="enteredReason"></ion-input>
                   </ion-item>
+                  <div *ngIf="isSubmitted && myGroup.controls.enteredReason.hasError('required')" class="error-message">Reason is required *</div>
                   <ion-item>
                     <ion-label position="floating">Expense Amount</ion-label>
-                    <ion-input type="number" [(ngModel)]="enteredAmount"></ion-input>
+                    <ion-input type="number" formControlName="enteredAmount" name="enteredAmount"></ion-input>
                   </ion-item>
+                  <div *ngIf="isSubmitted && myGroup.controls.enteredAmount.hasError('required')" class="error-message">Amount is required *</div>
                   <div class="ion-margin-vertical ion-text-right">
                     <ion-button color="danger" fill="outline" (click)="clearData()"><ion-icon slot="start" name="close"></ion-icon>Clear</ion-button>
-                    <ion-button (click)="addExpense()"> <ion-icon slot="start" name="add" ></ion-icon>Add Expense</ion-button>
+                    <ion-button (click)="addExpense()" > <ion-icon slot="start" name="add" ></ion-icon>Add Expense</ion-button>
                   </div>
+                </form>
             </ion-card-content>
           </ion-card>
     </ion-col>
@@ -41,9 +51,71 @@
       </ion-list>
     </ion-col>
   </ion-row>
-
   <ion-row>
     <ion-col size-md="6" offset-md="3"><p class="ion-margin">Total Expenses:<span>{{totalExpenses}}</span></p></ion-col>
   </ion-row>
 </ion-grid>
+<ion-slides #signupSlider>
+  <ion-slide>
+      <p *ngIf="submitAttempt" style="color: #ea6153;">Please fill out all details accurately.</p>
+      <ion-grid>
+        <ion-row>
+          <ion-col size-md ="6" offset-md="3">
+            <ion-list>
+                <form [formGroup]="slideOneForm">
+                    <ion-item>
+                        <ion-label position="floating">First Name</ion-label>
+                        <ion-input formControlName="firstName" type="text"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label position="floating">Last Name</ion-label>
+                        <ion-input formControlName="lastName" type="text"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label position="floating">Age</ion-label>
+                        <ion-input formControlName="age" type="number"></ion-input>
+                    </ion-item>
+                    <ion-buttons >
+                        <ion-button (click)="next()">Next <ion-icon name="arrow-forward"></ion-icon></ion-button>
+                    </ion-buttons>
+                </form>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+    </ion-grid>
+  </ion-slide>
+  <ion-slide>
+    <ion-grid>
+      <ion-row>
+        <ion-col size-md ="6" offset-md="3">
+          <ion-list >
+              <form [formGroup]="slideTwoForm">
+                  <ion-item>
+                      <ion-label position="floating">Username</ion-label>
+                      <ion-input formControlName="username" type="text"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                      <ion-label position="floating">Privacy</ion-label>
+                      <ion-select formControlName="privacy">
+                          <ion-select-option value="public" checked="true">Public</ion-select-option>
+                          <ion-select-option value="friends">Friends Only</ion-select-option>
+                          <ion-select-option value="private">Private</ion-select-option>
+                      </ion-select>
+                  </ion-item>
+                  <ion-item>
+                      <ion-label position="floating">Bio</ion-label>
+                      <ion-textarea formControlName="bio"></ion-textarea>
+                  </ion-item>
+                  <ion-button expand="full" color="primary" (click)="save()">Create Account!</ion-button>
+              </form>
+          </ion-list>
+          <ion-buttons >
+              <ion-button (click)="prev()"><ion-icon name="arrow-back"></ion-icon> Prev</ion-button>
+          </ion-buttons>
+        </ion-col>
+       
+     </ion-row>
+    </ion-grid>
+  </ion-slide>
+</ion-slides>
 </ion-content>
